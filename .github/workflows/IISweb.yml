@@ -29,10 +29,17 @@ jobs:
           name: dotnet-deploy-package
           path: D:/a/dotnetcode2/dotnetcode2/obj/Debug/Package/dotnet.zip
           
-      - name: Copy Artifact to Repo
+      # - name: Copy Artifact to Repo
+      #   run: |
+      #    mkdir -p $GITHUB_WORKSPACE/artifacts
+      #    cp D:/a/dotnetcode2/dotnetcode2/obj/Debug/Package/dotnet.zip $GITHUB_WORKSPACE/artifacts/
+
+      - name: Copy Artifact to Repos
+        shell: pwsh
         run: |
-         mkdir -p $GITHUB_WORKSPACE/artifacts
-         cp D:/a/dotnetcode2/dotnetcode2/obj/Debug/Package/dotnet.zip $GITHUB_WORKSPACE/artifacts/
+         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts"
+         Copy-Item -Path "D:\a\dotnetcode2\dotnetcode2\obj\Debug\Package\dotnet.zip" -Destination "$env:GITHUB_WORKSPACE\artifacts\"
+
 
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -45,7 +52,7 @@ jobs:
          git config --global user.email "kukatladevopsengineer@gmail.com"
          git config --global user.name "venkat"
          git add artifacts/dotnet.zip
-         git commit -m "Uploaded artifact to repository"
+         git commit -m "Uploaded artifact to repository" || echo "Nothing to commit"
          git push origin main  # or 'main' depending on your branch
         working-directory: ${{ github.workspace }}
 
