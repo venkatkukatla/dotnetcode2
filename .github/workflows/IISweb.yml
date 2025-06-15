@@ -46,14 +46,13 @@ jobs:
       #   with:
       #    fetch-depth: 0  # This is essential for git push to work later
 
-      - name: Show current directory and files
-        run: |
-         pwd
-         ls -la
+      # - name: Show current directory and files
+      #   run: |
+      #    pwd
+      #    ls -la
 
       - name: List artifacts directory
-        run: |
-          Get-ChildItem artifacts -Force
+        run:  Get-ChildItem artifacts -Force
         working-directory: ${{ github.workspace }}
 
 
