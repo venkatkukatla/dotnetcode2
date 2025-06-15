@@ -15,7 +15,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1
 
       - name: Restore Packages
-        run: nuget restore MyApp.sln
+        run: nuget restore *.sln
 
       - name: Build Solution
         run: msbuild.exe MyApp.sln /p:Configuration=Release
