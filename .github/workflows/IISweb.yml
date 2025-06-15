@@ -22,3 +22,10 @@ jobs:
 
       - name: Publish
         run: msbuild.exe dotnet.sln /p:DeployOnBuild=true 
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: BuildOutput
+          path: ./bin/Release/
+
