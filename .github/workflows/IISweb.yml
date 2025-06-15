@@ -29,11 +29,20 @@ jobs:
           name: dotnet-deploy-package
           path: D:/a/dotnetcode2/dotnetcode2/obj/Debug/Package/dotnet.zip
           
-      - name: Download Artifact to Laptop
-        uses: actions/download-artifact@v4
-        with:
-         name: dotnet-deploy-package
-         path: C:/web
+      - name: Copy Artifact to Repo
+        run: |
+         mkdir -p $GITHUB_WORKSPACE/artifacts
+         cp D:/a/dotnetcode2/dotnetcode2/obj/Debug/Package/dotnet.zip $GITHUB_WORKSPACE/artifacts/
+
+      - name: Commit and Push Artifact
+        run: |
+          cd $GITHUB_WORKSPACE
+          git config --global user.email "kukatladevopsengineer@gmail.com"
+          git config --global user.name "venkat"
+          git add artifacts/dotnet.zip
+          git commit -m "Uploaded artifact to repository"
+          git push origin master  # Change 'main' to your actual branch
+            
 
 
 
