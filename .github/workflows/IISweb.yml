@@ -47,7 +47,7 @@ jobs:
          git add artifacts/dotnet.zip
          git commit -m "Uploaded artifact to repository"
          git push origin main  # or 'main' depending on your branch
-        working-directory: ${{ github.workspace }}/dotnetcode2
+        working-directory: ${{ github.workspace }}
 
 
 
