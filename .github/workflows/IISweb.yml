@@ -27,7 +27,7 @@ jobs:
         run: msbuild.exe dotnet.sln /p:Configuration=Release
 
       - name: Create Deploy Folder
-        run: mkdir -Force D:\a\dotnetcode2\deploy
+        run: mkdir -Force D:\a\dotnetcode2\output
 
       # - name: Publish to Folder
       #   run: |
@@ -44,6 +44,18 @@ jobs:
             /p:WebPublishMethod=FileSystem `
             /p:PublishDir="D:\a\dotnetcode2\output\" `
             /p:Configuration=Release
+
+            
+      - name: List Published Files (Debug)
+        run: dir D:\a\dotnetcode2\output
+
+      - name: Upload Artifact (Optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dotnet-deploy-package
+          path: D:/a/dotnetcode2/deploy/output
+
+
 
       - name: Copy Files to IIS Site Folder
         run: |
