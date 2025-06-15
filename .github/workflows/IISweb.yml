@@ -1,4 +1,4 @@
-name: Deploy to IIS via File Copy
+name: Deploy to IIS via Web Deploy
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: windows-latest
 
     steps:
       - name: Checkout Code
@@ -20,38 +20,28 @@ jobs:
         run: Set-ExecutionPolicy RemoteSigned -Scope Process -Force
         shell: powershell
 
-      # Optional: Restore packages if needed
       # - name: Restore Packages
       #   run: nuget restore dotnet.sln
 
       - name: Build Solution
         run: msbuild.exe dotnet.sln /p:Configuration=Release
 
-      - name: Create Output Folder
-        run: mkdir -Force D:\a\dotnetcode2\output
+      - name: Create Deploy Folder
+        run: mkdir -Force D:\a\dotnetcode2\deploy
 
-      - name: Publish Project to Output Folder
+      - name: Publish to Folder
         run: |
           msbuild.exe dotnet.sln `
             /p:DeployOnBuild=true `
-            /p:WebPublishMethod=FileSystem `
-            /p:PublishDir="D:\a\dotnetcode2\output\" `
+            /p:WebPublishMethod=Package `
+            /p:PackageLocation="D:\a\dotnetcode2\deploy\dotnet.zip" `
             /p:Configuration=Release
-      
+
       - name: List Published Files (Debug)
-        run: dir D:\a\dotnetcode2\output
+        run: dir D:\a\dotnetcode2\deploy
 
-      - name: Publish via dotnet CLI
-        run: dotnet publish path\to\dotnet.csproj -c Release -o D:\a\dotnetcode2\output
-
-
-      - name: Upload Artifact (Optional)
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: dotnet-deploy-package
-          path: D:/a/dotnetcode2/output
-          if-no-files-found: error
-
-      - name: Copy Files to IIS Site Folder
-        run: |
-          robocopy "D:\a\dotnetcode2\output" "C:\hello" /MIR
+          path: D:/a/dotnetcode2/deploy/dotnet.zip
