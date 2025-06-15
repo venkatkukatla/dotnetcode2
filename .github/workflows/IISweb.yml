@@ -37,9 +37,13 @@ jobs:
             /p:WebPublishMethod=FileSystem `
             /p:PublishDir="D:\a\dotnetcode2\output\" `
             /p:Configuration=Release
-
+      
       - name: List Published Files (Debug)
         run: dir D:\a\dotnetcode2\output
+
+      - name: Publish via dotnet CLI
+        run: dotnet publish path\to\dotnet.csproj -c Release -o D:\a\dotnetcode2\output
+
 
       - name: Upload Artifact (Optional)
         uses: actions/upload-artifact@v4
