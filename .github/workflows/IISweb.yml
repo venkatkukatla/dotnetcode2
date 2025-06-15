@@ -51,6 +51,11 @@ jobs:
          pwd
          ls -la
 
+      - name: List artifacts directory
+        run: Get-ChildItem artifacts -Force
+        working-directory: ${{ github.workspace }}
+
+
 
 
 
