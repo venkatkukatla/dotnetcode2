@@ -42,12 +42,12 @@ jobs:
 
       - name: Commit and Push Artifact
         run: |
-         cd $GITHUB_WORKSPACE
          git config --global user.email "kukatladevopsengineer@gmail.com"
          git config --global user.name "venkat"
          git add artifacts/dotnet.zip
          git commit -m "Uploaded artifact to repository"
-         git push origin master  # or 'main' depending on your branch
+         git push origin main  # or 'main' depending on your branch
+        working-directory: ${{ github.workspace }}/dotnetcode2
 
 
 
