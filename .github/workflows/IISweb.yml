@@ -46,6 +46,11 @@ jobs:
         with:
          fetch-depth: 0  # This is essential for git push to work later
 
+      - name: List artifacts folder
+        run: ls -la artifacts
+        working-directory: ${{ github.workspace }}/dotnetcode2
+
+
 
       - name: Commit and Push Artifact
         run: |
