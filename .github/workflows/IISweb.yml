@@ -20,8 +20,8 @@ jobs:
         run: Set-ExecutionPolicy RemoteSigned -Scope Process -Force
         shell: powershell
 
-      # - name: Restore Packages
-      #   run: nuget restore dotnet.sln
+      - name: Restore Packages
+        run: nuget restore dotnet.sln
 
       - name: Build Solution
         run: msbuild.exe dotnet.sln /p:Configuration=Release
@@ -29,19 +29,36 @@ jobs:
       - name: Create Deploy Folder
         run: mkdir -Force D:\a\dotnetcode2\deploy
 
-      - name: Publish to Folder
+      # - name: Publish to Folder
+      #   run: |
+      #     msbuild.exe dotnet.sln `
+      #       /p:DeployOnBuild=true `
+      #       /p:WebPublishMethod=Package `
+      #       /p:PackageLocation="D:\a\dotnetcode2\deploy\dotnet.zip" `
+      #       /p:Configuration=Release
+      
+      - name: Publish Project to Folder (without packaging)
         run: |
           msbuild.exe dotnet.sln `
             /p:DeployOnBuild=true `
-            /p:WebPublishMethod=Package `
-            /p:PackageLocation="D:\a\dotnetcode2\deploy\dotnet.zip" `
+            /p:WebPublishMethod=FileSystem `
+            /p:PublishDir="D:\a\dotnetcode2\output\" `
             /p:Configuration=Release
 
-      - name: List Published Files (Debug)
-        run: dir D:\a\dotnetcode2\deploy
+      - name: Copy Files to IIS Site Folder
+        run: |
+          robocopy "D:\a\dotnetcode2\output" "C:\hello" /MIR
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: dotnet-deploy-package
-          path: D:/a/dotnetcode2/deploy/dotnet.zip
+
+      # - name: List Published Files (Debug)
+      #   run: dir D:\a\dotnetcode2\deploy
+
+      # - name: Upload Artifact (Optional)
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: dotnet-deploy-package
+      #     path: D:/a/dotnetcode2/deploy/dotnet.zip
+
+
+
+
