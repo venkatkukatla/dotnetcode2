@@ -34,11 +34,11 @@ jobs:
       # #    mkdir -p $GITHUB_WORKSPACE/artifacts
       # #    cp D:/a/dotnetcode2/dotnetcode2/obj/Debug/Package/dotnet.zip $GITHUB_WORKSPACE/artifacts/
 
-      # - name: Copy Artifact to Repos
-      #   shell: pwsh
-      #   run: |
-      #    New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts"
-      #    Copy-Item -Path "D:\a\dotnetcode2\dotnetcode2\obj\Debug\Package\dotnet.zip" -Destination "$env:GITHUB_WORKSPACE\artifacts\"
+      - name: Copy Artifact to Repos
+        shell: pwsh
+        run: |
+         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts"
+         Copy-Item -Path "D:\a\dotnetcode2\dotnetcode2\obj\Debug\Package\dotnet.zip" -Destination "$env:GITHUB_WORKSPACE\artifacts\"
 
 
       # - name: Checkout Code
@@ -46,10 +46,6 @@ jobs:
       #   with:
       #    fetch-depth: 0  # This is essential for git push to work later
 
-      # - name: Show current directory and files
-      #   run: |
-      #    pwd
-      #    ls -la
 
       - name: List artifacts directory
         run:  Get-ChildItem artifacts -Force
