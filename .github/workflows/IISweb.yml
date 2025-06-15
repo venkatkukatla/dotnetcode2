@@ -11,55 +11,57 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1
+      # - name: Setup MSBuild
+      #   uses: microsoft/setup-msbuild@v1
 
-      - name: Restore Packages
-        run: nuget restore dotnet.sln
+      # - name: Restore Packages
+      #   run: nuget restore dotnet.sln
 
-      - name: Build Solution
-        run: msbuild.exe dotnet.sln /p:Configuration=Release
+      # - name: Build Solution
+      #   run: msbuild.exe dotnet.sln /p:Configuration=Release
 
-      - name: Publish
-        run: msbuild.exe dotnet.sln /p:DeployOnBuild=true 
+      # - name: Publish
+      #   run: msbuild.exe dotnet.sln /p:DeployOnBuild=true 
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: dotnet-deploy-package
-          path: D:/a/dotnetcode2/dotnetcode2/obj/Debug/Package/dotnet.zip
+      # - name: Upload Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: dotnet-deploy-package
+      #     path: D:/a/dotnetcode2/dotnetcode2/obj/Debug/Package/dotnet.zip
           
-      # - name: Copy Artifact to Repo
+      # # - name: Copy Artifact to Repo
+      # #   run: |
+      # #    mkdir -p $GITHUB_WORKSPACE/artifacts
+      # #    cp D:/a/dotnetcode2/dotnetcode2/obj/Debug/Package/dotnet.zip $GITHUB_WORKSPACE/artifacts/
+
+      # - name: Copy Artifact to Repos
+      #   shell: pwsh
       #   run: |
-      #    mkdir -p $GITHUB_WORKSPACE/artifacts
-      #    cp D:/a/dotnetcode2/dotnetcode2/obj/Debug/Package/dotnet.zip $GITHUB_WORKSPACE/artifacts/
+      #    New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts"
+      #    Copy-Item -Path "D:\a\dotnetcode2\dotnetcode2\obj\Debug\Package\dotnet.zip" -Destination "$env:GITHUB_WORKSPACE\artifacts\"
 
-      - name: Copy Artifact to Repos
-        shell: pwsh
+
+      # - name: Checkout Code
+      #   uses: actions/checkout@v3
+      #   with:
+      #    fetch-depth: 0  # This is essential for git push to work later
+
+      - name: Show current directory and files
         run: |
-         New-Item -ItemType Directory -Force -Path "$env:GITHUB_WORKSPACE\artifacts"
-         Copy-Item -Path "D:\a\dotnetcode2\dotnetcode2\obj\Debug\Package\dotnet.zip" -Destination "$env:GITHUB_WORKSPACE\artifacts\"
-
-
-      - name: Checkout Code
-        uses: actions/checkout@v3
-        with:
-         fetch-depth: 0  # This is essential for git push to work later
-
-      - name: List artifacts folder
-        run: ls -la artifacts
-        working-directory: ${{ github.workspace }}/dotnetcode2
+         pwd
+         ls -la
 
 
 
-      - name: Commit and Push Artifact
-        run: |
-         git config --global user.email "kukatladevopsengineer@gmail.com"
-         git config --global user.name "venkat"
-         git add artifacts/dotnet.zip
-         git commit -m "Uploaded artifact to repository" || echo "Nothing to commit"
-         git push origin master  # or 'main' depending on your branch
-        working-directory: ${{ github.workspace }}
+
+      # - name: Commit and Push Artifact
+      #   run: |
+      #    git config --global user.email "kukatladevopsengineer@gmail.com"
+      #    git config --global user.name "venkat"
+      #    git add artifacts/dotnet.zip
+      #    git commit -m "Uploaded artifact to repository" || echo "Nothing to commit"
+      #    git push origin master  # or 'main' depending on your branch
+      #   working-directory: ${{ github.workspace }}
 
 
 
