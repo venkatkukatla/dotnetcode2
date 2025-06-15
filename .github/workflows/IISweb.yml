@@ -18,7 +18,7 @@ jobs:
         run: nuget restore dotnet.sln
 
       - name: Build Solution
-        run: msbuild.exe MyApp.sln /p:Configuration=Release
+        run: msbuild.exe dotnet.sln /p:Configuration=Release
 
       - name: Publish
-        run: msbuild.exe MyApp.sln /p:DeployOnBuild=true /p:PublishProfile=MyPublishProfile.pubxml
+        run: msbuild.exe dotnet.sln /p:DeployOnBuild=true /p:PublishProfile=MyPublishProfile.pubxml
