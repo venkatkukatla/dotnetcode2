@@ -53,7 +53,7 @@ jobs:
          git config --global user.name "venkat"
          git add artifacts/dotnet.zip
          git commit -m "Uploaded artifact to repository" || echo "Nothing to commit"
-         git push origin main  # or 'main' depending on your branch
+         git push origin master  # or 'main' depending on your branch
         working-directory: ${{ github.workspace }}
 
 
