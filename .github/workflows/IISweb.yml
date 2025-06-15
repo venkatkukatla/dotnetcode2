@@ -26,6 +26,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: BuildOutput
-          path: ./bin/Release/
+          name: dotnet-deploy-package
+          path: D:/a/dotnetcode2/dotnetcode2/obj/Debug/Package/dotnet.zip
+
 
