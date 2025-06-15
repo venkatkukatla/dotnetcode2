@@ -20,8 +20,8 @@ jobs:
         run: Set-ExecutionPolicy RemoteSigned -Scope Process -Force
         shell: powershell
 
-      - name: Restore Packages
-        run: nuget restore dotnet.sln
+      # - name: Restore Packages
+      #   run: nuget restore dotnet.sln
 
       - name: Build Solution
         run: msbuild.exe dotnet.sln /p:Configuration=Release
