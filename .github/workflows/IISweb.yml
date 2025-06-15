@@ -29,4 +29,26 @@ jobs:
           name: dotnet-deploy-package
           path: D:/a/dotnetcode2/dotnetcode2/obj/Debug/Package/dotnet.zip
 
+      - name: Deploy to IIS via Remote PowerShell
+        run: |
+          $server = "192.168.0.102"  # Replace with your laptop IP
+          $user = "${{ secrets.user }}"
+          $password = ConvertTo-SecureString "${{ secrets.pass }}" -AsPlainText -Force
+          $cred = New-Object System.Management.Automation.PSCredential ($user, $password)
+
+          Invoke-Command -ComputerName $server -Credential $cred -ScriptBlock {
+            $sitePath = "C:\web"
+            $artifactPath = "C:/Deploy/dotnetcode2/dotnet.zip"
+
+            # Extract the package and deploy
+            Expand-Archive -Path $artifactPath -DestinationPath $sitePath -Force
+
+            # Restart IIS App Pool
+            Restart-WebAppPool -Name "dev"
+
+            # Restart IIS
+            Restart-Service -Name W3SVC
+          }
+
+
 
