@@ -44,14 +44,13 @@ jobs:
     steps:
       - name: Deploy to IIS using Web Deploy
         run: |
-          $param = '-setParam:"IIS Web Application Name=Default Web Site/dotnet_deploy"'
-          & "C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe" `
-             -verb:sync `
-             -source:package='D:\a\dotnetcode2\deploy\dotnet.zip' `
-             -dest:auto,computerName='localhost',authType='NTLM' `
-             $param `
-             -allowUntrusted `
-             -verbose
+         & "C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe" --% `
+          -verb:sync `
+          -source:package="D:\a\dotnetcode2\deploy\dotnet.zip" `
+          -dest:auto,computerName="localhost",authType="NTLM" `
+          -setParam:"IIS Web Application Name=Default Web Site/dotnet_deploy" `
+          -allowUntrusted `
+          -verbose
         shell: powershell
 
 
