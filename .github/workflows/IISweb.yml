@@ -48,7 +48,7 @@ jobs:
             -verb:sync `
             -source:package='D:\a\dotnetcode2\deploy\dotnet.zip' `
             -dest:auto,computerName='localhost',authtype='NTLM' `
-            -setParam:name="IIS Web Application Name",value="prod" `
+            -setParam:"IIS Web Application Name=prod" `
             -allowUntrusted `
             -verbose
         shell: powershell
