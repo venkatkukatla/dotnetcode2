@@ -9,9 +9,9 @@ jobs:
   build:
     runs-on: self-hosted
 
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+    # steps:
+    #   - name: Checkout Code
+    #     uses: actions/checkout@v3
 
       # - name: Setup MSBuild
       #   uses: microsoft/setup-msbuild@v1
@@ -44,14 +44,16 @@ jobs:
     steps:
       - name: Deploy to IIS using Web Deploy
         run: |
+          $param = '-setParam:"IIS Web Application Name=Default Web Site/dotnet_deploy"'
           & "C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe" `
-            -verb:sync `
-            -source:package='D:\a\dotnetcode2\deploy\dotnet.zip' `
-            -dest:auto,computerName='localhost',authtype='NTLM' `
-            -setParam:IIS Web Application Name='Default Web Site/dotnet_deploy' `
-            -allowUntrusted `
-            -verbose
+             -verb:sync `
+             -source:package='D:\a\dotnetcode2\deploy\dotnet.zip' `
+             -dest:auto,computerName='localhost',authType='NTLM' `
+             $param `
+             -allowUntrusted `
+             -verbose
         shell: powershell
+
 
       # - name: List Published Files (Debug)
       #   run: dir D:\a\dotnetcode2\deploy
