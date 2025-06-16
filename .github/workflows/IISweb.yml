@@ -60,6 +60,18 @@ jobs:
       #     -allowUntrusted `
       #     -verbose
       #   shell: powershell
+          - name: Unzip dotnet.zip to output folder
+            run: |
+              $zipFile = "D:\a\dotnetcode2\deploy\dotnet.zip"
+              $unzipPath = "D:\a\dotnetcode2\deploy\dotnet"
+
+              if (Test-Path $unzipPath) {
+                  Remove-Item $unzipPath -Recurse -Force
+               }
+
+              Expand-Archive -Path $zipFile -DestinationPath $unzipPath -Force
+            shell: powershell
+
       
           - name: Deploy using xcopy to IIS folder
             run: |
