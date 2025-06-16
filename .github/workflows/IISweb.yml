@@ -29,6 +29,14 @@ jobs:
       - name: Create Deploy Folder
         run: mkdir -Force D:\a\dotnetcode2\deploy
 
+      - name: Ensure Deploy Folder is Clean
+        run: |
+          $zipPath = "D:\a\dotnetcode2\deploy\dotnet.zip"
+          if (Test-Path $zipPath) {
+            Remove-Item $zipPath -Force
+          }
+        shell: powershell
+
       - name: Publish to Folder
         run: |
           msbuild.exe dotnet.sln `
