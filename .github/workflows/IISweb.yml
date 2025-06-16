@@ -37,11 +37,11 @@ jobs:
             /p:PackageLocation="D:\a\dotnetcode2\deploy\dotnet.zip" `
             /p:Configuration=Release
 
-      - name: List Published Files (Debug)
-        run: dir D:\a\dotnetcode2\deploy
+      # - name: List Published Files (Debug)
+      #   run: dir D:\a\dotnetcode2\deploy
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: dotnet-deploy-package
-          path: D:/a/dotnetcode2/deploy/dotnet.zip
+      # - name: Upload Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: dotnet-deploy-package
+      #     path: D:/a/dotnetcode2/deploy/dotnet.zip
