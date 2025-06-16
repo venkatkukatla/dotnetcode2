@@ -70,7 +70,7 @@ jobs:
           - name: Restart IIS App Pool
             run: |
              Import-Module WebAdministration
-             Restart-WebAppPool -Name "prod"
+             iisreset
             shell: powershell
 
 
