@@ -13,29 +13,29 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1
+      # - name: Setup MSBuild
+      #   uses: microsoft/setup-msbuild@v1
 
-      - name: Allow PowerShell Scripts
-        run: Set-ExecutionPolicy RemoteSigned -Scope Process -Force
-        shell: powershell
+      # - name: Allow PowerShell Scripts
+      #   run: Set-ExecutionPolicy RemoteSigned -Scope Process -Force
+      #   shell: powershell
 
-      # - name: Restore Packages
-      #   run: nuget restore dotnet.sln
+      # # - name: Restore Packages
+      # #   run: nuget restore dotnet.sln
 
-      - name: Build Solution
-        run: msbuild.exe dotnet.sln /p:Configuration=Release
+      # - name: Build Solution
+      #   run: msbuild.exe dotnet.sln /p:Configuration=Release
 
-      - name: Create Deploy Folder
-        run: mkdir -Force D:\a\dotnetcode2\deploy
+      # - name: Create Deploy Folder
+      #   run: mkdir -Force D:\a\dotnetcode2\deploy
 
-      - name: Publish to Folder
-        run: |
-          msbuild.exe dotnet.sln `
-            /p:DeployOnBuild=true `
-            /p:WebPublishMethod=Package `
-            /p:PackageLocation="D:\a\dotnetcode2\deploy\dotnet.zip" `
-            /p:Configuration=Release
+      # - name: Publish to Folder
+      #   run: |
+      #     msbuild.exe dotnet.sln `
+      #       /p:DeployOnBuild=true `
+      #       /p:WebPublishMethod=Package `
+      #       /p:PackageLocation="D:\a\dotnetcode2\deploy\dotnet.zip" `
+      #       /p:Configuration=Release
 
   deploy:
     needs: build
@@ -48,7 +48,7 @@ jobs:
             -verb:sync `
             -source:package='D:\a\dotnetcode2\deploy\dotnet.zip' `
             -dest:auto,computerName='localhost',authtype='NTLM' `
-            -setParam:IIS Web Application Name="Default Web Site/dotnet_deploy" `
+            -setParam:IIS Web Application Name='Default Web Site/dotnet_deploy' `
             -allowUntrusted `
             -verbose
         shell: powershell
