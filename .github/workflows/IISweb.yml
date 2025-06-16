@@ -66,6 +66,12 @@ jobs:
 
              xcopy "$source\*" "$target\" /E /Y /Q
             shell: powershell
+            
+          - name: Restart IIS App Pool
+            run: |
+             Import-Module WebAdministration
+             Restart-WebAppPool -Name "prod"
+            shell: powershell
 
 
       # - name: List Published Files (Debug)
