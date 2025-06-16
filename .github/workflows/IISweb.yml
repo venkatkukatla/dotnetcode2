@@ -37,6 +37,22 @@ jobs:
             /p:PackageLocation="D:\a\dotnetcode2\deploy\dotnet.zip" `
             /p:Configuration=Release
 
+  deploy:
+    needs: build
+    runs-on: self-hosted
+
+    steps:
+      - name: Deploy to IIS using Web Deploy
+        run: |
+          & "C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe" `
+            -verb:sync `
+            -source:package='D:\a\dotnetcode2\deploy\dotnet.zip' `
+            -dest:auto,computerName='localhost',authtype='NTLM' `
+            -setParam:name="IIS Web Application Name",value="prod" `
+            -allowUntrusted `
+            -verbose
+        shell: powershell
+
       # - name: List Published Files (Debug)
       #   run: dir D:\a\dotnetcode2\deploy
 
