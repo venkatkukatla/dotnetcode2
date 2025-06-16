@@ -55,7 +55,7 @@ jobs:
       
           - name: Deploy using xcopy to IIS folder
             run: |
-             $source = "D:\a\dotnetcode2\deploy"
+             $source = "D:\a\dotnetcode2\deploy\dotnet\Content\D_C\actions-runner\code\dotnetcode2\dotnetcode2\obj\Release\Package\PackageTmp"
              $target = "C:\prod"
 
              if (Test-Path $target) {
